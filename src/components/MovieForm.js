@@ -1,5 +1,9 @@
 import React, { Component } from 'react'
 import styles from './styles'
+import { connect } from 'react-redux'
+import { setMovieInfo } from '../redux/movieReducer'
+
+// Import connect from react-redux and setMovieInfo from our moviesReducer.js file.
 
 class MovieForm extends Component {
   constructor() {
@@ -17,8 +21,12 @@ class MovieForm extends Component {
     })
   }
 
+  // Inside of handleSubmit, invoke the props version of setMovieInfo, passing it title, poster, and rating from our local state.
+
   handleSubmit = e => {
     e.preventDefault()
+    const {title, poster, rating} = this.state
+    this.props.setMovieInfo(title, poster, rating)
     this.props.history.push('/confirm')
   }
 
@@ -56,4 +64,7 @@ class MovieForm extends Component {
     )
   }
 }
-export default MovieForm
+
+// Wrap your export of MovieForm in the second invocation of connect. Because we don't need to display any redux state values in this component, just set them, instead of passing mapStateToProps to the first invocation of connect, we will pass null and an object containing our setMovieInfo function as the second argument.
+
+export default connect(null, {setMovieInfo})(MovieForm)

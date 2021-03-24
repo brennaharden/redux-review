@@ -1,8 +1,9 @@
 import React from 'react'
 import styles from './styles'
+import {connect} from 'react-redux'
 
 const MovieList = props => {
-  const movieList = [].map(element => {
+  const movieList = props.movies.map(element => {
     return (
       <div style={styles.movieListItem}>
         <img style={styles.poster} src={element.poster} alt={element.title} />
@@ -21,4 +22,12 @@ const MovieList = props => {
     </div>
   )
 }
-export default MovieList
+
+const mapStateToProps = (state) => {
+  const {movies} = state
+  return {
+    movies
+  }
+}
+
+export default connect(mapStateToProps)(MovieList)
